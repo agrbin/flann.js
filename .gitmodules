@@ -1,0 +1,3 @@
+[submodule "flann-src"]
+	path = flann-src
+	url = https://github.com/mariusmuja/flann
