@@ -21,7 +21,8 @@ ef="['_buildFromDataset','_buildFromFile','_saveIndex',\
 
 flannflags=$(memory) \
 					-s EXPORTED_FUNCTIONS=$(ef) \
-					--post-js glue/const.js
+					--pre-js glue/const.js \
+					--pre-js glue/glue.js
 
 flann.js: bin/flann.js wrapper.js.sh
 	sh wrapper.js.sh > flann.js

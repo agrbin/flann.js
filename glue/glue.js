@@ -1,10 +1,7 @@
-var Flann = {};
-var c = console.log;
-
 (function() {
 
   // datasetPtr is false if built from file.
-  Flann["Index"] = function (indexPtr, datasetPtr) {
+  Module["Index"] = function (indexPtr, datasetPtr) {
     var N, K, that = this;
 
     this.getVeclen = function () {
@@ -21,6 +18,9 @@ var c = console.log;
 
     // return k above results where k is number of elements in query
     this.multiQuery = function (query, nn) {
+      if (typeof nn === 'undefined') {
+        nn = 1;
+      }
       if (!(nn > 0 && nn < N)) {
         throw "nn should be in <0, N>";
       }
@@ -101,7 +101,7 @@ var c = console.log;
     })();
   };
 
-  Flann["fromDataset"] = function (dataset, options) {
+  Module["fromDataset"] = function (dataset, options) {
     // emscripten FS to write dataset contents to a randomly named file
     // cpp to read a file, build an index
     // return index
@@ -114,13 +114,13 @@ var c = console.log;
         [subHeap.ptr, dim[0], dim[1], buildOptionsString(options)]);
 
     if (sol) {
-      return new Flann["Index"](sol, subHeap.ptr);
+      return new Module["Index"](sol, subHeap.ptr);
     } else {
       throw "building from file failed\n";
     }
   };
 
-  Flann["fromSerialized"] = function (dataset, indexContents) {
+  Module["fromSerialized"] = function (dataset, indexContents) {
     // emscripten FS to write indexContents to a randomly named file 
     // cpp to build an index from that name
     // return index
@@ -144,7 +144,7 @@ var c = console.log;
 
     FS.unlink(filename);
     if (ptr) {
-      return new Flann["Index"](ptr, datasetSubHeap.ptr);
+      return new Module["Index"](ptr, datasetSubHeap.ptr);
     } else {
       throw "building from file failed\n";
     }
