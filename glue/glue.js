@@ -76,7 +76,7 @@
       var filename = randomFileName();
       ccall('saveIndex', 'void', ['number', 'string'], [indexPtr, filename]);
       var ret = FS.readFile(filename, { encoding : 'binary' });
-      ret = cloneArrayBuffer(ret.buffer);
+      ret = arrayBufferToUint8Array(ret.buffer);
       FS.unlink(filename);
       return ret;
     };
@@ -135,6 +135,11 @@
     }
 
     filename = randomFileName();
+
+    if (indexContents instanceof ArrayBuffer) {
+      indexContents = new Uint8Array(indexContents);
+    }
+
     FS.writeFile(filename, indexContents, { encoding : 'binary' } );
 
     ptr = ccall('buildFromFile',
@@ -155,10 +160,11 @@
     return "file_" + Math.random().toString().substr(2);
   }
 
-  function cloneArrayBuffer(src)  {
+  function arrayBufferToUint8Array(src)  {
     var dst = new ArrayBuffer(src.byteLength);
-    new Uint8Array(dst).set(new Uint8Array(src));
-    return dst;
+    var view = new Uint8Array(dst);
+    view.set(new Uint8Array(src));
+    return view;
   }
 
   function getDimensions(a) {

@@ -21,6 +21,7 @@ ef="['_buildFromDataset','_buildFromFile','_saveIndex',\
 
 flannflags=$(memory) \
 					-s EXPORTED_FUNCTIONS=$(ef) \
+					-s DISABLE_EXCEPTION_CATCHING=0 \
 					--pre-js glue/const.js \
 					--pre-js glue/glue.js
 
