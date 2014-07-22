@@ -3,11 +3,12 @@ flann.js
 
 This is flann.js, a port of C++ FLANN library to JavaScript.
 
-[FLANN][1] is a C++ library written by
+Fast Library for Approximate Nearest Neighbors [FLANN][1] is a C++ library written by
 Marius Muja and David G. Lowe.
 
-Ported by Anton Grbin using [emscripten][2].
+One can use JavaScript version to do in-browser image processing, or pattern recognition.
 
+Ported by Anton Grbin using [emscripten][2].
 
 Examples
 --------
