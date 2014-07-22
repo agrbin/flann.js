@@ -1,13 +1,12 @@
 <!doctype>
 <!--
-  This example shows how to use Flann.js inside a web browser.
+This example shows how to use Flann.js using a web worker.
 
-  gui.js does the canvas drawing.
-  generator.js is random generator for points and colors.
-  workload.js is function wrapper that calculates function
-    parameter in order to keep execution time steady.
-  main.js does the main loop invoking the two functions defined
-    in this file.
+Note that this example is slower than example without worker because data that
+is passed to and from worker is serialized and deserialized.
+
+Worker should be used when amount of data is smaller than computational time
+needed to process the data (eg. when dimension is >> 2).
 -->
 <html>
   <head>
@@ -20,7 +19,7 @@
       var ex = ex || {};
 
       // we will store Flann index data structure in this object
-      ex.index = null;
+      ex.flannWorker = new Worker('flann-worker.js');
 
       // this function will be called when dataset is built.
       // 
@@ -28,8 +27,8 @@
       // each point is a 2-element array (2-dimensional vector);
       // here we build autotuned index:
       ex.buildIndexCallback = function (dataset, done) {
-        index = Flann.fromDataset(dataset);
-        done();
+        ex.flannWorker.onmessage = done;
+        ex.flannWorker.postMessage(['init', dataset]);
       };
 
       // this function will be called in each animation frame
@@ -46,7 +45,12 @@
       // distance value from query point.
       // number of keys in those object will be equal to nn (1 in this case)
       ex.getNearestCallback = function (queryPoints, done) {
-        done(index.multiQuery(queryPoints, 1));
+        ex.flannWorker.onmessage = function (msg) {
+          if (msg.data[0] === 'result') {
+            done(msg.data[1]);
+          }
+        };
+        ex.flannWorker.postMessage(['query', queryPoints, 1]);
       };
     </script>
   </head>
