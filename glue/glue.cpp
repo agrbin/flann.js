@@ -10,6 +10,14 @@ namespace {
       const std::string &key,
       const std::string &value_str) {
     std::istringstream value_ss(value_str);
+
+    if (key == "cb_index") {
+      float value;
+      value_ss >> value;
+      params[key] = value;
+      return;
+    }
+
     int value;
     value_ss >> value;
 
@@ -22,7 +30,7 @@ namespace {
     } else {
       // this is for save_dataset
       if (value_str == "true" || value_str == "false") {
-        params[key] = value_str == "true";
+        params[key] = (value_str == "true");
       } else {
         params[key] = value;
       }

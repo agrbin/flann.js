@@ -4,6 +4,23 @@
 //
 // this example shows flann.js basic usage and interface.
 //
+//
+// it is currently a bit clumsy to save a autotuned index together with
+// dataset. in order to do that, you must:
+//
+// first build autotuned index:
+//
+// index = Flann.fromDataset(dataset)
+//
+// then, get it's params and add save_dataset: true
+//
+// params = index.getParameters();
+// params.save_dataset = true;
+//
+// and then build it again
+//
+// index = Flann.fromDataset(dataset, params)
+//
 eval(require('fs').readFileSync('../../flann.js').toString());
 
 (function () {
