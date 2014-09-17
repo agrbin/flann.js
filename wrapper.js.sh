@@ -6,11 +6,18 @@ cat LICENSE
 echo  "*/"
 
 # output body
-echo "var Flann = (function() {
+echo -n "var Flann = (function() {\n
   var Module = this;";
 
 cat bin/flann.js
 
-echo "
+cat <<EOF
+
   return this;
-}).call({});";
+}).call({});
+
+if ((typeof module !== 'undefined') && ('exports' in module)) {
+  module.exports = Flann;
+}
+EOF
+
