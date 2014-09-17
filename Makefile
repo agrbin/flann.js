@@ -1,9 +1,9 @@
 lzdir=flann-src/src/cpp/flann/ext
 include=-Iflann-src/src/cpp/
 
-# this is 128mb of available memory to flann.js
+# this is 1gb of available memory to flann.js
 # if you hit out of memory change this to '-s ALLOW_MEMORY_GROWTH=1'
-memory=-s TOTAL_MEMORY=134217728
+memory=-s TOTAL_MEMORY=1006632960
 
 # if you want lzma compression for index-es use 'lz4_0=bin/lz4.o bin/lz4hc.o'
 # here.
