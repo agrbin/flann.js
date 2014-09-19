@@ -11,7 +11,8 @@ cat <<EOF
 if (typeof process !== 'undefined' && !('platform' in process)) {
   (function () {
     var write, output;
-    write = write || (typeof console === 'undefined' ? null : console.log);
+    write = write || (typeof console === 'undefined' ? null :
+                      console.log.bind(console));
     write = write || (typeof print === 'undefined' ? null : print);
     write = write || function () {};
     output = { write: write };
