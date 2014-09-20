@@ -141,6 +141,7 @@
     }
 
     FS.writeFile(filename, indexContents, { encoding : 'binary' } );
+    indexContents = null;
 
     ptr = ccall('buildFromFile',
                 'number',

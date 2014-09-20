@@ -3,7 +3,7 @@ include=-Iflann-src/src/cpp/
 
 # this is 1gb of available memory to flann.js
 # if you hit out of memory change this to '-s ALLOW_MEMORY_GROWTH=1'
-memory=-s TOTAL_MEMORY=503316480
+memory=-s ALLOW_MEMORY_GROWTH=1
 
 # if you want lzma compression for index-es use 'lz4_0=bin/lz4.o bin/lz4hc.o'
 # here.
